@@ -3,7 +3,7 @@
 A machine learning project that predicts residential home prices using the **Ames Housing Dataset** (80 features, ~1,500 properties). Built as an end-to-end ML pipeline with a deployed Streamlit web app.
 
 ## 🔗 Live Demo
-👉 **[Try the app here](https://your-app.streamlit.app)** ← update after deployment
+👉 **Not Deployed yet** 
 
 ---
 
