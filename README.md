@@ -47,7 +47,7 @@ house-price-predictor-ml/
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/yourusername/house-price-predictor-ml
+git clone https://github.com/KragenZ/house-price-predictor-ml
 cd house-price-predictor-ml
 
 # 2. Install dependencies
