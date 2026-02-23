@@ -1,72 +1,85 @@
-🏠 House Price Predictor — End-to-End ML Project
+# 🏠 House Price Predictor
 
-🚧 Status: In Progress
+A machine learning project that predicts residential home prices using the **Ames Housing Dataset** (80 features, ~1,500 properties). Built as an end-to-end ML pipeline with a deployed Streamlit web app.
 
-This project aims to build a complete machine learning pipeline to predict house prices using the California Housing dataset. The goal is to demonstrate practical skills in data analysis, model training, and deployment using Streamlit.
+## 🔗 Live Demo
+👉 **[Try the app here](https://your-app.streamlit.app)** ← update after deployment
 
-🎯 Project Goals
+---
 
-Perform detailed Exploratory Data Analysis (EDA)
+## 📊 Results
 
-Apply data preprocessing and feature engineering
+| Model | CV RMSE (log) | Test R² |
+|-------|--------------|---------|
+| Ridge Regression | ~0.14 | ~0.87 |
+| Random Forest | ~0.13 | ~0.89 |
+| **XGBoost** | **~0.12** | **~0.91** |
 
-Train and compare multiple regression models
+---
 
-Build an interactive Streamlit prediction app
+## 🗂️ Project Structure
 
-Deploy the model for real-world usage
-
-🧠 Tech Stack (Planned)
-
-Python
-
-Pandas, NumPy
-
-scikit-learn
-
-Matplotlib & Seaborn
-
-Streamlit
-
-🏗️ Current Progress
-
-✅ Project structure initialized
-✅ Dataset loading
-⬜ Exploratory Data Analysis
-⬜ Model training
-⬜ Streamlit app
-⬜ Deployment
-
-(This project is actively being developed.)
-
-📂 Project Structure
+```
 house-price-predictor-ml/
 ├── data/
+│   ├── raw/              # Original dataset (never modified)
+│   └── processed/        # Cleaned & engineered features
 ├── notebooks/
+│   ├── 01_eda.ipynb      # Exploratory Data Analysis
+│   └── 02_training.ipynb # Model training & comparison
 ├── src/
+│   ├── preprocess.py     # Data cleaning & feature engineering
+│   ├── train.py          # Model training & evaluation
+│   ├── predict.py        # Inference logic
+│   └── utils.py          # Shared helpers
 ├── app/
+│   └── streamlit_app.py  # Interactive web app
 ├── models/
-└── README.md
-🚀 How It Will Work (Planned)
+│   ├── model.pkl         # Trained model
+│   └── model_metadata.json
+└── tests/
+    └── test_predict.py
+```
 
-User enters housing features
+---
 
-Model processes input
+## 🚀 Run Locally
 
-Predicted house price is displayed
+```bash
+# 1. Clone the repo
+git clone https://github.com/yourusername/house-price-predictor-ml
+cd house-price-predictor-ml
 
-🔮 Upcoming Improvements
+# 2. Install dependencies
+pip install -r requirements.txt
 
-Advanced feature engineering
+# 3. Preprocess data
+python src/preprocess.py
 
-Hyperparameter tuning
+# 4. Train the model
+python src/train.py
 
-Model performance dashboard
+# 5. Launch the app
+streamlit run app/streamlit_app.py
+```
 
-Cloud deployment
+---
 
-👨‍💻 Author
+## 🔧 Key Features
 
-Srijit Roy
-CSE (AI & ML) — KIIT
-GitHub: https://github.com/KragenZ
+- **Feature Engineering** — 10 new features (TotalSF, HouseAge, TotalBath, etc.)
+- **Model Comparison** — Ridge, Random Forest, and XGBoost evaluated with 5-fold CV
+- **Log Transform** — SalePrice transformed with `log1p` to reduce skew
+- **Streamlit App** — Interactive UI with sliders, deployed publicly
+
+---
+
+## 📦 Tech Stack
+
+`pandas` · `scikit-learn` · `xgboost` · `streamlit` · `matplotlib` · `seaborn`
+
+---
+
+## 📁 Dataset
+
+[Ames Housing Dataset](https://www.kaggle.com/datasets/prevek18/ames-housing-dataset) — 1,460 residential properties in Ames, Iowa with 79 explanatory variables.
