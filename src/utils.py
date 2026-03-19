@@ -12,8 +12,8 @@ from sklearn.metrics import mean_absolute_error
 ROOT = Path(__file__).resolve().parent.parent
 MODEL_PATH = ROOT / "models" / "model.pkl"
 METADATA_PATH = ROOT / "models" / "model_metadata.json"
-RAW_DATA_PATH = ROOT / "data" / "raw" / "housing.csv"
-PROCESSED_DATA_PATH = ROOT / "data" / "processed" / "housing_clean.csv"
+RAW_DATA_PATH = ROOT / "Data" / "Raw" / "housing.csv"
+PROCESSED_DATA_PATH = ROOT / "Data" / "processed" / "housing_clean.csv"
 
 
 # ── Model I/O ─────────────────────────────────────────────────
