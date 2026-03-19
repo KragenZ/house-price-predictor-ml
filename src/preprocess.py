@@ -8,17 +8,23 @@ import numpy as np
 from utils import RAW_DATA_PATH, PROCESSED_DATA_PATH
 
 
+import kagglehub
+import shutil
+import os
 def load_raw_data():
-    url = "https://raw.githubusercontent.com/dsrscientist/dataset1/master/AmesHousing.csv"
     try:
-        df = pd.read_csv(RAW_DATA_PATH)
-        print(f"✅ Loaded from local: {RAW_DATA_PATH}")
-    except FileNotFoundError:
-        print("Local file not found. Downloading from URL...")
-        df = pd.read_csv(url)
-        df.to_csv(RAW_DATA_PATH, index=False)
-        print(f"✅ Saved to {RAW_DATA_PATH}")
-    return df
+        if os.path.exists(RAW_DATA_PATH) and os.path.getsize(RAW_DATA_PATH) > 0:
+            df = pd.read_csv(RAW_DATA_PATH)
+            print(f"✅ Loaded from local: {RAW_DATA_PATH}")
+            return df
+    except Exception:
+        pass
+    print("Local file not found or empty. Downloading from Kaggle...")
+    path = kagglehub.dataset_download("prevek18/ames-housing-dataset")
+    downloaded_file = os.path.join(path, "AmesHousing.csv")
+    shutil.copy(downloaded_file, RAW_DATA_PATH)
+    print(f"✅ Saved to {RAW_DATA_PATH}")
+    return pd.read_csv(RAW_DATA_PATH)
 
 
 def drop_outliers(df):
