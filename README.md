@@ -1,19 +1,22 @@
 # 🏠 House Price Predictor
+[![Python](https://img.shields.io/badge/Python-3.13-blue.svg)](https://python.org)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://house-price-predictor-ml-nh9zrtguvhpmhwsys9qexr.streamlit.app/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-Driven-orange.svg)](https://xgboost.readthedocs.io/)
 
-A machine learning project that predicts residential home prices using the **Ames Housing Dataset** (80 features, ~1,500 properties). Built as an end-to-end ML pipeline with a deployed Streamlit web app.
+A complete machine learning project that predicts residential home prices using the **Ames Housing Dataset** (80 features, ~1,500 properties). Built as an automated, end-to-end ML pipeline featuring data cleaning, model comparison, and a live Streamlit UI.
 
 ## 🔗 Live Demo
-👉 **Not Deployed yet** 
+🚀 **[Launch House Price Predictor Web App](https://house-price-predictor-ml-nh9zrtguvhpmhwsys9qexr.streamlit.app/)**
 
 ---
 
-## 📊 Results
+## 📊 Model Performance
 
-| Model | CV RMSE (log) | Test R² |
-|-------|--------------|---------|
-| Ridge Regression | ~0.14 | ~0.87 |
-| Random Forest | ~0.13 | ~0.89 |
-| **XGBoost** | **~0.12** | **~0.91** |
+| Model | CV RMSE (log) | Test MAE ($) | Test R² |
+|-------|--------------|--------------|---------|
+| Ridge Regression | ~0.14 | ~$15,500 | ~0.87 |
+| Random Forest | ~0.13 | ~$14,200 | ~0.89 |
+| **XGBoost** | **~0.12** | **~$12,800** | **~0.91** |
 
 ---
 
