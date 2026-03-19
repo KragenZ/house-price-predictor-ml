@@ -8,7 +8,7 @@ An end-to-end Machine Learning project to predict residential real estate prices
 ## 🔗 Live Application & Demo
 > 🚀 **[Try the House Price Predictor Web App here!](https://house-price-predictor-ml-nh9zrtguvhpmhwsys9qexr.streamlit.app/)**
 
-<video src="streamlit_demo.webm" width="800" autoplay loop muted playsinline></video>
+![Streamlit App Walkthrough](streamlit_demo.gif)
 
 ---
 
