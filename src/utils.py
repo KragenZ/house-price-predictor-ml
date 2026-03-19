@@ -6,6 +6,7 @@ import json
 import joblib
 import numpy as np
 from pathlib import Path
+from sklearn.metrics import mean_absolute_error
 
 # ── Paths ────────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parent.parent
@@ -43,3 +44,7 @@ def load_metadata(path=METADATA_PATH):
 def rmse(y_true, y_pred):
     """Root Mean Squared Error on log-transformed predictions."""
     return np.sqrt(np.mean((np.log1p(y_true) - np.log1p(y_pred)) ** 2))
+
+def mae(y_true, y_pred):
+    """Mean Absolute Error ($)."""
+    return mean_absolute_error(y_true, y_pred)

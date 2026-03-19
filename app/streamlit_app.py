@@ -27,29 +27,36 @@ try:
     meta = load_metadata()
     st.sidebar.success(f"✅ Model: **{meta['model']}**")
     st.sidebar.metric("R² Score", f"{meta['r2']:.3f}")
+    if 'mae' in meta:
+        st.sidebar.metric("MAE", f"${meta['mae']:,.0f}")
     st.sidebar.metric("RMSE", f"${meta['rmse']:,.0f}")
     st.sidebar.caption(f"Trained on: {meta['trained_on']}")
 except Exception:
     st.sidebar.warning("Model not loaded. Run train.py first.")
 
 # Input Form 
-st.subheader("🏗️ House Details")
+st.subheader("🏗️ Quick Estimate")
+col_a, col_r = st.columns(2)
+with col_a:
+    area = st.number_input("Total Area (sq ft)", 500, 10000, 1500)
+with col_r:
+    rooms = st.number_input("Total Rooms (Bedrooms & Bathrooms)", 1, 15, 6)
 
-col1, col2 = st.columns(2)
+with st.expander("⚙️ Advanced House Details (Optional)", expanded=False):
+    col1, col2 = st.columns(2)
+    with col1:
+        overall_qual = st.slider("Overall Quality (1–10)", 1, 10, 6)
+        gr_liv_area = st.number_input("Above Ground Living Area (sq ft)", 500, 6000, area)
+        total_bsmt_sf = st.number_input("Basement Area (sq ft)", 0, 3000, int(area * 0.3))
+        first_flr_sf = st.number_input("1st Floor Area (sq ft)", 500, 4000, gr_liv_area)
+        second_flr_sf = st.number_input("2nd Floor Area (sq ft)", 0, 2000, 0)
 
-with col1:
-    overall_qual = st.slider("Overall Quality (1–10)", 1, 10, 5)
-    gr_liv_area = st.number_input("Above Ground Living Area (sq ft)", 500, 6000, 1500)
-    total_bsmt_sf = st.number_input("Basement Area (sq ft)", 0, 3000, 800)
-    first_flr_sf = st.number_input("1st Floor Area (sq ft)", 500, 4000, 1000)
-    second_flr_sf = st.number_input("2nd Floor Area (sq ft)", 0, 2000, 0)
-
-with col2:
-    garage_cars = st.selectbox("Garage Capacity (cars)", [0, 1, 2, 3, 4], index=2)
-    full_bath = st.selectbox("Full Bathrooms", [1, 2, 3, 4], index=1)
-    half_bath = st.selectbox("Half Bathrooms", [0, 1, 2], index=0)
-    year_built = st.number_input("Year Built", 1872, 2023, 1990)
-    year_remod = st.number_input("Year Remodeled", 1872, 2023, 1990)
+    with col2:
+        garage_cars = st.selectbox("Garage Capacity (cars)", [0, 1, 2, 3, 4], index=2)
+        full_bath = st.selectbox("Full Bathrooms", [1, 2, 3, 4], index=min(4, max(1, rooms // 2)))
+        half_bath = st.selectbox("Half Bathrooms", [0, 1, 2], index=0)
+        year_built = st.number_input("Year Built", 1872, 2023, 2000)
+        year_remod = st.number_input("Year Remodeled", 1872, 2023, 2000)
 
 yr_sold = 2010  
 

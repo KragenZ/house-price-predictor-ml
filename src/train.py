@@ -14,7 +14,7 @@ from sklearn.pipeline import Pipeline
 from xgboost import XGBRegressor
 
 from utils import (
-    PROCESSED_DATA_PATH, save_model, save_metadata, rmse
+    PROCESSED_DATA_PATH, save_model, save_metadata, rmse, mae
 )
 
 
@@ -39,14 +39,16 @@ def evaluate(model, X_train, y_train, X_test, y_test, name):
     # Test set score
     preds = np.expm1(model.predict(X_test))
     test_rmse = rmse(y_test, preds)
+    test_mae = mae(y_test, preds)
     r2 = model.score(X_test, np.log1p(y_test))
 
     print(f"\n📊 {name}")
     print(f"   CV RMSE (log):   {cv_rmse:.4f}")
     print(f"   Test RMSE ($):   ${np.expm1(test_rmse):,.0f}")
+    print(f"   Test MAE ($):    ${test_mae:,.0f}")
     print(f"   Test R²:         {r2:.4f}")
 
-    return {"rmse_log": cv_rmse, "test_rmse": float(np.expm1(test_rmse)), "r2": float(r2)}
+    return {"rmse_log": cv_rmse, "test_rmse": float(np.expm1(test_rmse)), "test_mae": float(test_mae), "r2": float(r2)}
 
 
 def train():
@@ -92,6 +94,7 @@ def train():
     save_metadata({
         "model": best_name,
         "rmse": results[best_name]["test_rmse"],
+        "mae": results[best_name]["test_mae"],
         "r2": results[best_name]["r2"],
         "trained_on": str(date.today()),
         "n_features": X.shape[1],
