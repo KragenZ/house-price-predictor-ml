@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from predict import predict_price
-from utils import load_metadata, load_model, PROCESSED_DATA_PATH
+from utils import load_metadata, load_model, PROCESSED_DATA_PATH, ROOT
 
 # Page Config 
 st.set_page_config(
@@ -27,11 +27,22 @@ st.set_page_config(
 # ---- Data & Model Loading (Cached) ----
 @st.cache_data
 def get_dataset():
-    try:
-        return pd.read_csv(PROCESSED_DATA_PATH)
-    except Exception as e:
-        st.error(f"Dataset loading error on path: {PROCESSED_DATA_PATH}. Error: {e}")
-        return None
+    # Attempt multiple path casings because Streamlit Cloud can cache old Linux Git topologies
+    possible_paths = [
+        PROCESSED_DATA_PATH,
+        ROOT / "Data" / "processed" / "housing_clean.csv",
+        ROOT / "data" / "Processed" / "housing_clean.csv"
+    ]
+    for p in possible_paths:
+        if p.exists():
+            return pd.read_csv(p)
+            
+    # Try finding it dynamically just in case
+    for p in ROOT.rglob("housing_clean.csv"):
+        return pd.read_csv(p)
+        
+    st.error(f"Dataset loading error. Looked in {PROCESSED_DATA_PATH} but could not find the file.")
+    return None
 
 @st.cache_resource
 def get_model():
@@ -217,7 +228,7 @@ with tab_analytics:
                     
                 if importances is not None:
                     # Map to feature names
-                    features = meta.get("features", X_train.columns if 'X_train' in locals() else [f"Feature {i}" for i in range(len(importances))])
+                    features = meta.get("features", [f"Feature {i}" for i in range(len(importances))])
                     imp_series = pd.Series(importances, index=features)
                     top_features = imp_series.sort_values(ascending=False).head(10)
                     
