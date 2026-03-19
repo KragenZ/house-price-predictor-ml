@@ -29,7 +29,8 @@ st.set_page_config(
 def get_dataset():
     try:
         return pd.read_csv(PROCESSED_DATA_PATH)
-    except Exception:
+    except Exception as e:
+        st.error(f"Dataset loading error on path: {PROCESSED_DATA_PATH}. Error: {e}")
         return None
 
 @st.cache_resource
